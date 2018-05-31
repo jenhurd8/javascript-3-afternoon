@@ -29,9 +29,20 @@
   Call your class Employee and receive all the data in the constructor in the order listed above.
 */
 
-//Code Here
+class Employee {
+  constructor(first_name, last_name, email, age){
+    this.first_name = first_name;
+    this.last_name = last_name;
+    this.email = email;
+    this.age = age;
+  }
+  makeWidget(){
+    return this.first_name + " " + this.last_name + " Widget";
+  }
 
+}
 
+var guy = new Employee ("Joe", "Smith", "jo@smith.com", 88);
 
 ////////// PROBLEM 2 //////////
 
@@ -49,8 +60,20 @@
   Call your new class Manager
 */
 
-//Code Here
-
+class Manager extends Employee {
+  constructor(first_name, last_name, email, age, reports) {
+    super(first_name, last_name, email, age);
+    this.reports = [];
+  }
+    hire(Employee){
+      this.reports.push(Employee);
+    }
+    fire(index){
+     this.reports.splice(index, 1);
+    }    
+  }
+var emptyArr = [];
+var testManager = new Manager("Jim","Jo","friend@fo.com",55, emptyArr);
 
 
 ////////// PROBLEM 3 //////////
@@ -75,8 +98,46 @@
   Call your new class ProgressiveManager
 */
 
-//Code Here
+class ProgressiveManager extends Manager {
+    constructor(first_name, last_name, email, age, reports, title, bonus){
+      super(first_name, last_name, email, age, reports);
+      this.title = 'Not a manager';
+      this.bonus = 0;
+    }
+    hire(Employee){
+      if(this.title === 0){
+        this.title = "Not a manager";
+      } else if(this.bonus<4) {
+        this.title = "Barely Manager";
+      } else if (this.bonus<11){
+        this.title = "Mostly Manager";
+      } else if (this.bonus<51){
+        this.title = "Manager";
+      } else if (this.bonus<101){
+        this.title = "Manager Plus";
+      } else {
+        this.title = "Bestest Manager";
+      }
+    }
+    fire(Employee){
+      if(this.title === 0){
+        this.title = "Not a manager";
+      } else if(this.bonus<4) {
+        this.title = "Barely Manager";
+      } else if (this.bonus<11){
+        this.title = "Mostly Manager";
+      } else if (this.bonus<51){
+        this.title = "Manager";
+      } else if (this.bonus<101){
+        this.title = "Manager Plus";
+      } else {
+        this.title = "Bestest Manager";
+      }
+      this.bonus = this.bonus + 100;
+    }
+}
 
+var pManager = new ProgressiveManager("Nancy", "Potato", "nanpo@spud.com", 33, [], "Not a manager", 0);
 
 
 ////////// PROBLEM 4 - Black Diamond //////////
@@ -103,5 +164,22 @@
 */
 
 //Code Here
+class Machine{
+  constructor(){
+    var widgets_made_count = 0;
+    var wear_and_tear_count = 0;
+    var needs_reboot = false;
+  }
+  makeWidgets(number){
+    widgets_made_count += number;
+   // wear_and_tear_count = (number/50) * Math.floor;
+  }
+  fixMachine(){
+    this.needs_reboot = true;
+  }
+  reboot(){
+    return function rebootEnd (){wear_and_tear_count -=10; needs_reboot=false};
+  }
+}
 
 
