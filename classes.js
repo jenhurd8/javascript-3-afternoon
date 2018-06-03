@@ -30,19 +30,18 @@
 */
 
 class Employee {
-  constructor(first_name, last_name, email, age){
+  constructor(first_name, last_name, email, age) {
     this.first_name = first_name;
     this.last_name = last_name;
     this.email = email;
     this.age = age;
   }
-  makeWidget(){
+  makeWidget() {
     return this.first_name + " " + this.last_name + " Widget";
   }
-
 }
 
-var guy = new Employee ("Joe", "Smith", "jo@smith.com", 88);
+var guy = new Employee("Joe", "Smith", "jo@smith.com", 88);
 
 ////////// PROBLEM 2 //////////
 
@@ -65,16 +64,15 @@ class Manager extends Employee {
     super(first_name, last_name, email, age);
     this.reports = [];
   }
-    hire(Employee){
-      this.reports.push(Employee);
-    }
-    fire(index){
-     this.reports.splice(index, 1);
-    }    
+  hire(Employee) {
+    this.reports.push(Employee);
   }
+  fire(index) {
+    this.reports.splice(index, 1);
+  }
+}
 var emptyArr = [];
-var testManager = new Manager("Jim","Jo","friend@fo.com",55, emptyArr);
-
+var testManager = new Manager("Jim", "Jo", "friend@fo.com", 55, emptyArr);
 
 ////////// PROBLEM 3 //////////
 
@@ -99,46 +97,64 @@ var testManager = new Manager("Jim","Jo","friend@fo.com",55, emptyArr);
 */
 
 class ProgressiveManager extends Manager {
-    constructor(first_name, last_name, email, age, reports, title, bonus){
-      super(first_name, last_name, email, age, reports);
-      this.title = 'Not a manager';
-      this.bonus = 0;
+  constructor(
+    first_name,
+    last_name,
+    email,
+    age,
+    reports = [],
+    title = "Not a manager",
+    bonus = 0
+  ) {
+    super(first_name, last_name, email, age, reports);
+    this.title = title;
+    this.bonus = bonus;
+    this.reports = reports;
+  }
+
+  hire(employee) {
+    this.reports.push(employee);
+    if (this.reports.length === 0) {
+      this.title = "Not a manager";
+    } else if (this.reports.length < 4) {
+      this.title = "Barely Manager";
+    } else if (this.reports.length < 11) {
+      this.title = "Mostly Manager";
+    } else if (this.reports.length < 51) {
+      this.title = "Manager";
+    } else if (this.reports.length < 101) {
+      this.title = "Manager Plus";
+    } else {
+      this.title = "Bestest Manager";
     }
-    hire(Employee){
-      if(this.title === 0){
-        this.title = "Not a manager";
-      } else if(this.bonus<4) {
-        this.title = "Barely Manager";
-      } else if (this.bonus<11){
-        this.title = "Mostly Manager";
-      } else if (this.bonus<51){
-        this.title = "Manager";
-      } else if (this.bonus<101){
-        this.title = "Manager Plus";
-      } else {
-        this.title = "Bestest Manager";
-      }
+  }
+  fire(employee) {
+    if (this.reports.length === 0) {
+      this.title = "Not a manager";
+    } else if (this.reports.length < 4) {
+      this.title = "Barely Manager";
+    } else if (this.reports.length < 11) {
+      this.title = "Mostly Manager";
+    } else if (this.reports.length < 51) {
+      this.title = "Manager";
+    } else if (this.reports.length < 101) {
+      this.title = "Manager Plus";
+    } else {
+      this.title = "Bestest Manager";
     }
-    fire(Employee){
-      if(this.title === 0){
-        this.title = "Not a manager";
-      } else if(this.bonus<4) {
-        this.title = "Barely Manager";
-      } else if (this.bonus<11){
-        this.title = "Mostly Manager";
-      } else if (this.bonus<51){
-        this.title = "Manager";
-      } else if (this.bonus<101){
-        this.title = "Manager Plus";
-      } else {
-        this.title = "Bestest Manager";
-      }
-      this.bonus = this.bonus + 100;
-    }
+    this.bonus = this.bonus + 100;
+  }
 }
 
-var pManager = new ProgressiveManager("Nancy", "Potato", "nanpo@spud.com", 33, [], "Not a manager", 0);
-
+var pManager = new ProgressiveManager(
+  "Nancy",
+  "Potato",
+  "nanpo@spud.com",
+  33,
+  ["Jim", "Joe"],
+  "Barely manager",
+  0
+);
 
 ////////// PROBLEM 4 - Black Diamond //////////
 
@@ -164,22 +180,24 @@ var pManager = new ProgressiveManager("Nancy", "Potato", "nanpo@spud.com", 33, [
 */
 
 //Code Here
-class Machine{
-  constructor(){
-    var widgets_made_count = 0;
-    var wear_and_tear_count = 0;
-    var needs_reboot = false;
+class Machine {
+  constructor() {
+    this.widgets_made_count = 0;
+    this.wear_and_tear_count = 0;
+    this.needs_reboot = false;
   }
-  makeWidgets(number){
-    widgets_made_count += number;
-   // wear_and_tear_count = (number/50) * Math.floor;
+  makeWidgets(number) {
+    return (
+      (this.widgets_made_count += number),
+      (this.wear_and_tear_count += number / 50)
+    );
   }
-  fixMachine(){
-    this.needs_reboot = true;
+  fixMachine() {
+    return (this.needs_reboot = true);
   }
-  reboot(){
-    return function rebootEnd (){wear_and_tear_count -=10; needs_reboot=false};
+  reboot() {
+    this.wear_and_tear_count = this.wear_and_tear_count - 10;
+    this.needs_reboot = false;
+    return function rebootEnd() {};
   }
 }
-
-
